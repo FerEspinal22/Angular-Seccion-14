@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { Hero, Publisher } from '../../interfaces/hero.interface';
 
 import { HeroesService } from '../../services/heroes.service';
 
-import { switchMap } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs';
 
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 
@@ -19,7 +19,7 @@ import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-
   styles: [
   ]
 })
-export class NewPageComponent {
+export class NewPageComponent implements OnInit {
 
   // * Formulario reactivo
   public heroForm = new FormGroup({
@@ -49,9 +49,7 @@ export class NewPageComponent {
 
   get currentHero(): Hero {
     const hero = this.heroForm.value as Hero;
-
     return hero;
-
   }
 
   ngOnInit(): void {
@@ -77,7 +75,7 @@ export class NewPageComponent {
     if (this.currentHero.id) {
       this.heroesService.updateHero( this.currentHero )
         .subscribe( hero => {
-          this.showSnackbar(`${ hero.superhero } updated`);
+          this.showSnackbar(`${ hero.superhero } updated!`);
         });
 
       return;
@@ -86,7 +84,7 @@ export class NewPageComponent {
     this.heroesService.addHero( this.currentHero )
       .subscribe( hero => {
         this.router.navigate([ '/heroes/edit', hero.id ]);
-        this.showSnackbar(`${ hero.superhero } created`);
+        this.showSnackbar(`${ hero.superhero } created!`);
       })
   }
 
@@ -97,19 +95,33 @@ export class NewPageComponent {
       data: this.heroForm.value
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if ( !result ) return;
+    dialogRef.afterClosed()
+      .pipe(
+        filter((result: boolean) => result ),
+        switchMap( () => this.heroesService.deleteHeroById( this.currentHero.id )),
+        filter( (wasDeleted: boolean) => wasDeleted ),
+        )
+      .subscribe( () => {
+        this.router.navigate(['/heroes']);
+    })
 
-      console.log('deleted');
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if ( !result ) return;
 
-      this.heroesService.deleteHeroById( this.currentHero.id );
-      this.router.navigate(['/heroes'])
-    });
+    //   console.log('deleted');
+
+    //   this.heroesService.deleteHeroById( this.currentHero.id )
+    //   .subscribe( wasDeleted => {
+    //     if( wasDeleted ) this.router.navigate([ '/heroes' ]);
+    //   })
+    //   this.router.navigate(['/heroes']);
+    // });
   }
+
 
   showSnackbar( message: string ):void {
     this.snackbar.open(message, 'done', {
-      duration: 2500
+      duration: 2500,
     })
   }
 }

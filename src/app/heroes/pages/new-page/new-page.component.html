@@ -1,5 +1,8 @@
-<h1>{{ !currentHero.id ? 'Agregar' : 'Editar ' + currentHero.superhero }}</h1>
-
+<h1>
+  {{ currentHero.id ? 'Editar' : 'Agregar' }}
+  héroe
+  <small *ngIf="currentHero.id">{{ currentHero.superhero }}</small>
+</h1>
 
 <mat-divider class="mb-2"></mat-divider>
 
@@ -60,11 +63,10 @@
 
               <mat-option
                 *ngFor="let publisher of publishers"
-                value="publisher.id"
+                [value]="publisher.id"
               >
                 {{ publisher.desc }}
               </mat-option>
-
             </mat-select>
           </mat-form-field>
 
