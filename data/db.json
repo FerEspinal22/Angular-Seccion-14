@@ -21,7 +21,8 @@
       "publisher": "DC Comics",
       "alter_ego": "Kal-El",
       "first_appearance": "Action Comics #1",
-      "characters": "Kal-El"
+      "characters": "Kal-El",
+      "alt_img": ""
     },
     {
       "id": "dc-flash",
@@ -166,6 +167,15 @@
       "alter_ego": "Norrin Radd",
       "first_appearance": "The Fantastic Four #48",
       "characters": "Norrin Radd"
+    },
+    {
+      "id": "RQX3AGg",
+      "superhero": "Black Adam",
+      "publisher": "publisher.id",
+      "alter_ego": "A",
+      "first_appearance": "Suicide Squad",
+      "characters": "Dwayne Johnson",
+      "alt_img": "https://www.xtrafondos.com/thumbs/1_11131.jpg"
     }
   ]
 }

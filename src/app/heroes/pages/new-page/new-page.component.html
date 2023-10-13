@@ -1,4 +1,4 @@
-<h1>Editar / agregar héroe Superman</h1>
+<h1>{{ !currentHero.id ? 'Agregar' : 'Editar ' + currentHero.superhero }}</h1>
 
 
 <mat-divider class="mb-2"></mat-divider>
@@ -53,7 +53,7 @@
 
           <mat-form-field class="col-12">
             <mat-label>Creador</mat-label>
-            <mat-select 
+            <mat-select
               formControlName="publisher"
               required=""
             >
@@ -82,11 +82,14 @@
         <div class="flex justify-content-between">
 
           <button
+            *ngIf="currentHero.id"
+            (click)="onDeleteHero()"
             mat-flat-button
             color="warn"
           >
             Borrar
           </button>
+          <span></span>
 
           <button
             mat-flat-button
@@ -106,8 +109,9 @@
   <div class="col-12 sm:col-6">
 
     <mat-card>
-      <img src="" alt="Imagen del heroe" mat-card-image>
+      <img [src]="currentHero | heroImage" alt="Imagen del heroe" mat-card-image>
     </mat-card>
 
   </div>
 </div>
+
