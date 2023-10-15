@@ -16,7 +16,6 @@ export class ConfirmDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: Hero,
   ) {
     console.log({data});
-    
   }
 
   onNoClick(): void {

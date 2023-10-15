@@ -10,7 +10,7 @@ import { Hero } from '../interfaces/hero.interface';
 @Injectable({ providedIn: 'root' })
 export class HeroesService {
 
-  private baseUrl: string = environments.baseUrl
+  private baseUrl: string = environments.baseUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -40,21 +40,12 @@ export class HeroesService {
     return this.http.patch<Hero>(`${this.baseUrl}/heroes/${ hero.id }`, hero )
   }
 
-  // deleteHero(hero: Hero): Observable<boolean> {
-
-  //   return this.http.delete(`${this.baseUrl}/heroes/${ hero.id }` )
-  //     .pipe(
-  //       catchError( err => of(false) ),
-  //       map(resp => true )
-  //     );
-  // }
-
   deleteHeroById(id: string): Observable<boolean> {
 
     return this.http.delete(`${this.baseUrl}/heroes/${ id }` )
       .pipe(
         map(resp => true ),
-        catchError( err => of(false) ),
+        catchError( err => of(false) )
       );
   }
 }

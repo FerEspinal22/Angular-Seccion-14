@@ -104,20 +104,7 @@ export class NewPageComponent implements OnInit {
       .subscribe( () => {
         this.router.navigate(['/heroes']);
     })
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if ( !result ) return;
-
-    //   console.log('deleted');
-
-    //   this.heroesService.deleteHeroById( this.currentHero.id )
-    //   .subscribe( wasDeleted => {
-    //     if( wasDeleted ) this.router.navigate([ '/heroes' ]);
-    //   })
-    //   this.router.navigate(['/heroes']);
-    // });
   }
-
 
   showSnackbar( message: string ):void {
     this.snackbar.open(message, 'done', {
